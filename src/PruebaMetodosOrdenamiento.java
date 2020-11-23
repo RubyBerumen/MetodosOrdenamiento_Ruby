@@ -64,7 +64,34 @@ class MetodosOrdenamiento{
 		
 	}//class Burbuja
 	
+	
 }//class MetodosOrdenamiento
+
+
+class Insercion{
+	
+	public void ordenar(int[]numeros) {
+		int aux;
+		
+		for (int i = 0; i < numeros.length; i++) {
+			aux = numeros[i];
+			
+			for (int j = i-1; j > 0 && numeros[j]>aux; j--) {
+				numeros[j+1]=numeros[j];
+				numeros[j]=aux;
+			}
+			
+		}
+		
+	}
+	
+	public void mostrarVector(int [] numeros) {
+		System.out.println(Arrays.toString(numeros));
+	}
+	
+
+	
+}//class insercion
 
 public class PruebaMetodosOrdenamiento {
 
@@ -87,7 +114,11 @@ public class PruebaMetodosOrdenamiento {
 		MetodosOrdenamiento.Burbuja.mostrarVector(numeros);
 		
 		
-		
+		Insercion i = new Insercion();
+		System.out.println("Vector ordenado por metodo de inserción");
+		i.ordenar(numeros);
+		i.mostrarVector(numeros);
+	
 		
 
 
