@@ -106,22 +106,43 @@ class MetodosOrdenamiento{
 	}//class Seleccion
 	
 	
+	
+	static class Quicksort{
+		
+		public static int[] ordenar (int[]numeros, int izq, int der) {
+			int pivote = numeros[izq];
+			int i = izq, j = der;
+			int aux;
+			
+			while (i<j) {
+				while(numeros[i]<=pivote && i<j) i++;
+				while(numeros[j]>pivote) j--;
+				if(i<j) {
+					aux = numeros[i];
+					numeros[i]=numeros[j];
+					numeros[j]=aux;
+				}
+				
+			}
+			numeros[izq] = numeros[j];
+			numeros[j] = pivote;
+			
+			if(izq<j-1)
+				ordenar(numeros,izq,j-1);
+			if(j+1 < der)
+				ordenar(numeros,j+1,der);
+			
+			return numeros;
+		}
+		
+	}//quicksort
+	
+	
 	public static void mostrarVector(int [] numeros) {
 		System.out.println("Vector ordenado: "+Arrays.toString(numeros) + "\n");
 	}
 
 }//class MetodosOrdenamiento
-
-
-
-	
-	
-
-	
-
-
-
-
 
 
 public class PruebaMetodosOrdenamiento {
@@ -138,7 +159,8 @@ public class PruebaMetodosOrdenamiento {
 			System.out.println("1. Burbuja");
             System.out.println("2. Inserción");
             System.out.println("3. Selección ");
-            System.out.println("4. Salir");
+            System.out.println("4. Quicksort");
+            System.out.println("5. Salir");
            
             try {
             	System.out.println("Escribe una de las opciones");
@@ -199,10 +221,13 @@ public class PruebaMetodosOrdenamiento {
                     	MetodosOrdenamiento.mostrarVector(numeros);
                         break;
                     case 4:
+                    	MetodosOrdenamiento.Quicksort.ordenar(numeros, 0, numeros.length-1);
+                    	MetodosOrdenamiento.mostrarVector(numeros);
+                    case 5:
                         salir = true;
                         break;
                     default:
-                        System.out.println("Debes ingresar números entre 1 y 4");
+                        System.out.println("Debes ingresar números entre 1 y 5");
                 }
 				
 			} catch (InputMismatchException e) {
