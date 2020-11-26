@@ -138,6 +138,35 @@ class MetodosOrdenamiento{
 	}//quicksort
 	
 	
+	static class Shellsort{
+		
+		public static void ordenar(int[] numeros) {
+			int intervalo;
+			intervalo = numeros.length/2;
+			
+			while(intervalo>0) {
+				for(int i = intervalo; i<numeros.length; i++) {
+					int j=i-intervalo;
+					while(j>=0) {
+						int k=j+intervalo;
+						if(numeros[j] <= numeros[k]) {
+							j-=1;
+						}else {
+							int aux = numeros[j];
+							numeros[j] = numeros[k];
+							numeros[k] = aux;
+							j-=intervalo;
+						}
+					}
+				}
+				intervalo=intervalo/2;
+			}
+			
+		}//public void ordenar
+		
+	}//class shellsort
+	
+	
 	public static void mostrarVector(int [] numeros) {
 		System.out.println("Vector ordenado: "+Arrays.toString(numeros) + "\n");
 	}
@@ -154,13 +183,14 @@ public class PruebaMetodosOrdenamiento {
 		
 		do {
 			int numeros [] = {6,2,9,7,1,0,4};
-			System.out.println("Vector desordenado: " + Arrays.toString(numeros) + "\n");
+			System.out.println("Vector desordenado: " + Arrays.toString(numeros));
 			System.out.println("Ordenar el arreglo por método de:");
 			System.out.println("1. Burbuja");
             System.out.println("2. Inserción");
             System.out.println("3. Selección ");
             System.out.println("4. Quicksort");
-            System.out.println("5. Salir");
+            System.out.println("5. Shellsort");
+            System.out.println("6. Salir");
            
             try {
             	System.out.println("Escribe una de las opciones");
@@ -223,11 +253,16 @@ public class PruebaMetodosOrdenamiento {
                     case 4:
                     	MetodosOrdenamiento.Quicksort.ordenar(numeros, 0, numeros.length-1);
                     	MetodosOrdenamiento.mostrarVector(numeros);
+                    	break;
                     case 5:
+                    	MetodosOrdenamiento.Shellsort.ordenar(numeros);
+                    	MetodosOrdenamiento.mostrarVector(numeros);
+                    	break;
+                    case 6:
                         salir = true;
                         break;
                     default:
-                        System.out.println("Debes ingresar números entre 1 y 5");
+                        System.out.println("Debes ingresar números entre 1 y 6");
                 }
 				
 			} catch (InputMismatchException e) {
