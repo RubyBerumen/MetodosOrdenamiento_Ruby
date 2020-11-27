@@ -167,8 +167,47 @@ class MetodosOrdenamiento{
 	}//class shellsort
 	
 	
+	
+	static class Radix{
+		
+		public static void orden(int[]numeros) {
+		      if(numeros.length == 0)
+		          return;
+		          int[][] np = new int[numeros.length][2];
+		          int[] q = new int[0x100];
+		          int i,j,k,l,f = 0;
+		          for(k=0;k<4;k++) {
+		             for(i=0;i<(np.length-1);i++)
+		             np[i][1] = i+1;
+		             np[i][1] = -1;
+		             for(i=0;i<q.length;i++)
+		             q[i] = -1;
+		             for(f=i=0;i<numeros.length;i++) {
+		                j = ((0xFF<<(k<<3))&numeros[i])>>(k<<3);
+		                if(q[j] == -1)
+		                l = q[j] = f;
+		             else {
+		                l = q[j];
+		                while(np[l][1] != -1)
+		                l = np[l][1];
+		                np[l][1] = f;
+		                l = np[l][1];
+		             }
+		             f = np[f][1];
+		             np[l][0] = numeros[i];
+		             np[l][1] = -1;
+		          }
+		          for(l=q[i=j=0];i<0x100;i++)
+		          for(l=q[i];l!=-1;l=np[l][1])
+		        	  numeros[j++] = np[l][0];
+		       }//for
+		}//orden
+		
+	}//class Radix
+	
+	
 	public static void mostrarVector(int [] numeros) {
-		System.out.println("Vector ordenado: "+Arrays.toString(numeros) + "\n");
+		System.out.println("Vector ordenado: "+Arrays.toString(numeros) + "\n\n");
 	}
 
 }//class MetodosOrdenamiento
@@ -190,7 +229,8 @@ public class PruebaMetodosOrdenamiento {
             System.out.println("3. Selección ");
             System.out.println("4. Quicksort");
             System.out.println("5. Shellsort");
-            System.out.println("6. Salir");
+            System.out.println("6. Radix");
+            System.out.println("7. Salir");
            
             try {
             	System.out.println("Escribe una de las opciones");
@@ -259,10 +299,14 @@ public class PruebaMetodosOrdenamiento {
                     	MetodosOrdenamiento.mostrarVector(numeros);
                     	break;
                     case 6:
+                    	MetodosOrdenamiento.Radix.orden(numeros);
+                    	MetodosOrdenamiento.mostrarVector(numeros);
+                    	break;
+                    case 7:
                         salir = true;
                         break;
                     default:
-                        System.out.println("Debes ingresar números entre 1 y 6");
+                        System.out.println("Debes ingresar números entre 1 y 7");
                 }
 				
 			} catch (InputMismatchException e) {
