@@ -71,6 +71,7 @@ class MetodosOrdenamiento{
 	static class Insercion{
 		
 		public static void ordenar(int[]numeros) {
+			
 			int aux;
 			
 			for (int i = 0; i < numeros.length; i++) {
@@ -206,6 +207,44 @@ class MetodosOrdenamiento{
 	}//class Radix
 	
 	
+	static class Intercalacion{
+		
+		public static int []ordenar(int primero[], int segundo[]){
+			
+			int arrayOrdenado[] = new int[primero.length+segundo.length];
+			
+			int i=0, j=0, k=0;
+			
+			while(i<primero.length && j<segundo.length) {
+				if(primero[i]<segundo[j]) {
+					arrayOrdenado[k] = primero[i];
+					k++;
+					i++;
+				}else {
+					arrayOrdenado[k] = segundo[j];
+					j++;
+					k++;
+					
+				}
+			}
+			while(j<segundo.length) {
+				arrayOrdenado[k] = segundo[j];
+				j++;
+				k++;
+			}
+			while(i<primero.length) {
+				arrayOrdenado[k] = segundo[i];
+				i++;
+				k++;
+			}
+			
+			return arrayOrdenado;
+			
+		}
+	}
+
+	
+	
 	public static void mostrarVector(int [] numeros) {
 		System.out.println("Vector ordenado: "+Arrays.toString(numeros) + "\n\n");
 	}
@@ -230,7 +269,8 @@ public class PruebaMetodosOrdenamiento {
             System.out.println("4. Quicksort");
             System.out.println("5. Shellsort");
             System.out.println("6. Radix");
-            System.out.println("7. Salir");
+            System.out.println("7. Intercalación");
+            System.out.println("8. Salir");
            
             try {
             	System.out.println("Escribe una de las opciones");
@@ -303,10 +343,15 @@ public class PruebaMetodosOrdenamiento {
                     	MetodosOrdenamiento.mostrarVector(numeros);
                     	break;
                     case 7:
+                    	int segundo[] = {5,50};
+                    	System.out.println("Vector 2: "+Arrays.toString(segundo));
+                    	MetodosOrdenamiento.Quicksort.ordenar(numeros, 0, numeros.length-1);
+                    	MetodosOrdenamiento.mostrarVector(MetodosOrdenamiento.Intercalacion.ordenar(numeros, segundo));
+                    case 8:
                         salir = true;
                         break;
                     default:
-                        System.out.println("Debes ingresar números entre 1 y 7");
+                        System.out.println("Debes ingresar números entre 1 y 8");
                 }
 				
 			} catch (InputMismatchException e) {
