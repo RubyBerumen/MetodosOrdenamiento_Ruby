@@ -242,6 +242,60 @@ class MetodosOrdenamiento{
 			
 		}
 	}
+	
+	
+	
+	static class MezclaDirecta{
+		
+		public static int[] ordenar(int numeros[]) {
+			int i,j,k;
+			if(numeros.length>1) {
+				int numElementosIzq = numeros.length/2;
+				int numElementosDer = numeros.length-numElementosIzq;
+				
+				int arregloIzquierdo[] = new int[numElementosIzq];
+				int arregloDerecho[] = new int[numElementosDer];
+				
+				for (i=0; i<numElementosIzq; i++) {
+					arregloIzquierdo[i] = numeros[i];
+				}
+				
+				for (i=numElementosIzq; i<numElementosIzq+numElementosDer; i++) {
+					arregloDerecho[i-numElementosIzq]=numeros[i];
+				}
+				
+				arregloIzquierdo = ordenar(arregloIzquierdo);
+				arregloDerecho = ordenar(arregloDerecho);
+				i=j=k=0;
+				
+				while(arregloIzquierdo.length!=j && arregloDerecho.length!=k) {
+					if(arregloIzquierdo[j]<arregloDerecho[k]) {
+						numeros[i] = arregloIzquierdo[j];
+						i++;
+						j++;
+					}else {
+						numeros[i] = arregloDerecho[k];
+						i++;
+						k++;
+						
+					}
+
+				}
+				
+				while(arregloIzquierdo.length!=j) {
+					numeros[i]=arregloIzquierdo[j];
+					i++;
+					j++;
+				}
+				while(arregloDerecho.length!=k) {
+					numeros[i]=arregloDerecho[k];
+					i++;
+					k++;
+				}
+			}
+			return numeros;
+		}
+	}
 
 	
 	
@@ -270,7 +324,8 @@ public class PruebaMetodosOrdenamiento {
             System.out.println("5. Shellsort");
             System.out.println("6. Radix");
             System.out.println("7. Intercalación");
-            System.out.println("8. Salir");
+            System.out.println("8. MezclaDirecta");
+            System.out.println("9. Salir");
            
             try {
             	System.out.println("Escribe una de las opciones");
@@ -348,10 +403,15 @@ public class PruebaMetodosOrdenamiento {
                     	MetodosOrdenamiento.Quicksort.ordenar(numeros, 0, numeros.length-1);
                     	MetodosOrdenamiento.mostrarVector(MetodosOrdenamiento.Intercalacion.ordenar(numeros, segundo));
                     case 8:
+                    	int vector2[];
+                		vector2=MetodosOrdenamiento.MezclaDirecta.ordenar(numeros);
+                		MetodosOrdenamiento.mostrarVector(vector2);
+                		break;
+                    case 9:
                         salir = true;
                         break;
                     default:
-                        System.out.println("Debes ingresar números entre 1 y 8");
+                        System.out.println("Debes ingresar números entre 1 y 9");
                 }
 				
 			} catch (InputMismatchException e) {
