@@ -296,6 +296,129 @@ class MetodosOrdenamiento{
 			return numeros;
 		}
 	}
+	
+	
+	
+	static class MezclaNatural{
+		public static int[] mezclaDirecta (int[] vector) {
+			int i,j,k;
+			if(vector.length>1) {
+				int nElementosIzquierda = vector.length/2;
+				int nElementosDerecha = vector.length - nElementosIzquierda;
+				int vectorI[] = new int [nElementosIzquierda];
+				int vectorD[] = new int [nElementosDerecha];
+				
+				for (i = 0; i < nElementosIzquierda; i++) {
+					vectorI[i]=vector[i];
+				}
+				
+				for (i = nElementosIzquierda; i < nElementosIzquierda+nElementosDerecha; i++){
+					vectorD[i-nElementosIzquierda] = vector[i];
+				}
+				vectorI = mezclaDirecta(vectorI);
+				vectorD = mezclaDirecta(vectorD);
+				i=0;
+				j=0;
+				k=0;
+				while(vectorI.length!=j && vectorD.length!=k) {
+					if(vectorI[j]<vectorD[k]) {
+						vector[i]=vectorI[j];
+						i++;
+						j++;
+					}else {
+						vector[i]=vectorD[k];
+						i++;
+						k++;
+					}//Else
+				}//While	
+				while(vectorI.length!=j) {
+					vector[i] = vectorI[j];
+					i++;
+					j++;
+				}
+				while(vectorD.length!=k) {
+					vector[i] = vectorD[k];
+					i++;
+					k++;
+				}	
+			}
+			return vector;
+		}
+		//MezclaDirecta2
+		public static void mezclaDirecta2 (int[] vector) {
+			int i,j,k;
+			if(vector.length>1) {
+				int nElementosIzquierda = vector.length/2;
+				int nElementosDerecha = vector.length - nElementosIzquierda;
+				int vectorI[] = new int [nElementosIzquierda];
+				int vectorD[] = new int [nElementosDerecha];
+				
+				for (i = 0; i < nElementosIzquierda; i++) {
+					vectorI[i]=vector[i];
+				}
+				
+				for (i = nElementosIzquierda; i < nElementosIzquierda+nElementosDerecha; i++){
+					vectorD[i-nElementosIzquierda] = vector[i];
+				}
+				vectorI = mezclaDirecta(vectorI);
+				vectorD = mezclaDirecta(vectorD);
+				i=0;
+				j=0;
+				k=0;
+				while(vectorI.length!=j && vectorD.length!=k) {
+					if(vectorI[j]<vectorD[k]) {
+						vector[i]=vectorI[j];
+						i++;
+						j++;
+					}else {
+						vector[i]=vectorD[k];
+						i++;
+						k++;
+					}//Else
+				}//While
+					
+				while(vectorI.length!=j) {
+					vector[i] = vectorI[j];
+					i++;
+					j++;
+				}
+				while(vectorD.length!=k) {
+					vector[i] = vectorD[k];
+					i++;
+					k++;
+				}	
+			}
+		}
+		
+		public static void mezclaNatural(int[] numeros) {
+			int izquierda =0;
+			int izq =0;
+			int derecha = numeros.length-1;//Sin el error de nullPointerExepcion
+			int der = derecha;
+			boolean ordenado = false;
+			do {
+				ordenado = true;
+				izquierda = 0;
+				while(izquierda<derecha) {
+					izq =izquierda;
+					while(izq < derecha && numeros[izq]<=numeros[izq+1]) {
+						izq++;
+					}
+					der = izq +1;
+					while(der==derecha-1 || der<derecha && numeros[der]<=numeros[der+1]) {
+						der++;
+					}
+					if(der<=derecha) {
+						mezclaDirecta2(numeros);
+						
+						ordenado = false;
+					}
+					izquierda=izq;
+					
+				}
+			}while(!ordenado);	
+		}	
+	}
 
 	
 	
@@ -324,8 +447,9 @@ public class PruebaMetodosOrdenamiento {
             System.out.println("5. Shellsort");
             System.out.println("6. Radix");
             System.out.println("7. Intercalación");
-            System.out.println("8. MezclaDirecta");
-            System.out.println("9. Salir");
+            System.out.println("8. Mezcla Directa");
+            System.out.println("9. Mezcla Natural");
+            System.out.println("10. Salir");
            
             try {
             	System.out.println("Escribe una de las opciones");
@@ -408,10 +532,13 @@ public class PruebaMetodosOrdenamiento {
                 		MetodosOrdenamiento.mostrarVector(vector2);
                 		break;
                     case 9:
+                    	MetodosOrdenamiento.MezclaNatural.mezclaNatural(numeros);
+                    	MetodosOrdenamiento.mostrarVector(numeros);
+                    case 10:
                         salir = true;
                         break;
                     default:
-                        System.out.println("Debes ingresar números entre 1 y 9");
+                        System.out.println("Debes ingresar números entre 1 y 10");
                 }
 				
 			} catch (InputMismatchException e) {
